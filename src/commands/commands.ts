@@ -30,6 +30,7 @@ export const enum Commands {
   locale_visibility_show = 'i18n-ally.locale-visibility-show',
   locale_visibility_hide = 'i18n-ally.locale-visibility-hide',
   open_url = 'i18n-ally.open-url',
+  open_i18n_url = 'i18n-ally.open-i18n-url',
   open_docs_hard_string = 'i18n-ally.open-docs-hard-string',
   support = 'i18n-ally.support',
   refresh_usage = 'i18n-ally.refresh-usage',
@@ -46,4 +47,5 @@ export const enum Commands {
   review_apply_translation = 'i18n-ally.review.apply-translation',
   review_apply_suggestion = 'i18n-ally.review.apply-suggestion',
   deepl_usage = 'i18n-ally.deepl-usage',
+  login = 'i18n-ally.login',
 }

@@ -1,75 +1,64 @@
-import { basename, extname } from 'path'
 import { TextDocument, window } from 'vscode'
-import { nanoid } from 'nanoid'
-import limax from 'limax'
-import { Config, Global } from '../extension'
+import axios from 'axios'
+// import { Config, Global } from '../extension'
+import { Config } from '../extension'
 import { ExtractInfo } from './types'
 import { CurrentFile } from './CurrentFile'
-import { changeCase } from '~/utils/changeCase'
+import { Log } from '~/utils'
 
-export function generateKeyFromText(text: string, filepath?: string, reuseExisting = false, usedKeys: string[] = []): string {
-  let key: string | undefined
+// export const i18nReplaceAPI = "https://ezreal.dev.xiaoman.cn/api/i18ns/vscode";
 
-  // already existed, reuse the key
-  // mostly for auto extraction
-  if (reuseExisting) {
-    key = Global.loader.searchKeyForTranslations(text)
-    if (key)
-      return key
+export async function generateKeyFromText(
+  text: string,
+  filepath?: string,
+  reuseExisting = false,
+  usedKeys: Array<string> = [],
+): Promise<string> {
+  const i18nReplaceApi
+    = Config.i18nReplaceApi || 'http://localhost:9010/api/i18ns/vscode' || ''
+
+  const GLOBAL_STATE_LOGIN_USER_NAME = 'LOGIN_USER_NAME'
+
+  const username = Config.ctx.globalState.get(GLOBAL_STATE_LOGIN_USER_NAME)
+
+  if (!username) {
+    Log.error('请登录后重试')
+    return ''
   }
 
-  // keygent
-  const keygenStrategy = Config.keygenStrategy
-  if (keygenStrategy === 'random') {
-    key = nanoid()
+  if (!i18nReplaceApi) {
+    Log.error('没有获取到 i18nReplaceApi')
+    return ''
   }
-  else if (keygenStrategy === 'empty') {
-    key = ''
-  }
-  else if (keygenStrategy === 'source') {
-    key = text
-  }
-  else {
-    text = text.replace(/\$/g, '')
-    key = limax(text, { separator: Config.preferredDelimiter, tone: false })
-      .slice(0, Config.extractKeyMaxLength ?? Infinity)
-  }
-
-  const keyPrefix = Config.keyPrefix
-  if (keyPrefix && keygenStrategy !== 'empty' && keygenStrategy !== 'source')
-    key = keyPrefix + key
-
-  if (filepath && key.includes('fileName')) {
-    key = key
-      .replace('{fileName}', basename(filepath))
-      .replace('{fileNameWithoutExt}', basename(filepath, extname(filepath)))
+  let textKey: string | undefined
+  const data = {
+    'zh-CN': text,
+    'zh-TW': '',
+    'en': '',
+    'desc': `vscode: ${filepath}`,
+    'platform': ['galio'],
+    'app': ['galio'],
+    'version': '0.0.1',
+    'username': username,
   }
 
-  key = changeCase(key, Config.keygenStyle).trim()
-
-  // some symbol can't convert to alphabet correctly, apply a default key to it
-  if (!key)
-    key = 'key'
-
-  // suffix with a auto increment number if same key
-  if (usedKeys.includes(key) || CurrentFile.loader.getNodeByKey(key)) {
-    const originalKey = key
-    let num = 0
-
-    do {
-      key = `${originalKey}${Config.preferredDelimiter}${num}`
-      num += 1
-    } while (
-      usedKeys.includes(key) || CurrentFile.loader.getNodeByKey(key, false)
-    )
+  try {
+    const response = await axios.post(i18nReplaceApi, data)
+    const { app = [], key = '' } = response.data.data || {}
+    textKey = app.includes('galio') ? `${key}` : `${app?.[0]}.${key}`
   }
-
-  return key
+  catch (e) {
+    Log.error(e)
+  }
+  return textKey || ''
 }
 
-export async function extractHardStrings(document: TextDocument, extracts: ExtractInfo[], saveFile = false) {
-  if (!extracts.length)
-    return
+export async function extractHardStrings(
+  document: TextDocument,
+  extracts: ExtractInfo[],
+  saveFile = false,
+) {
+  if (!extracts.length) return
 
   const editor = await window.showTextDocument(document)
   const filepath = document.uri.fsPath
@@ -79,12 +68,8 @@ export async function extractHardStrings(document: TextDocument, extracts: Extra
 
   // replace
   await editor.edit((editBuilder) => {
-    for (const extract of extracts) {
-      editBuilder.replace(
-        extract.range,
-        extract.replaceTo,
-      )
-    }
+    for (const extract of extracts)
+      editBuilder.replace(extract.range, extract.replaceTo)
   })
 
   // save keys
@@ -100,8 +85,7 @@ export async function extractHardStrings(document: TextDocument, extracts: Extra
       })),
   )
 
-  if (saveFile)
-    await document.save()
+  if (saveFile) await document.save()
 
   CurrentFile.invalidate()
 }

@@ -6,8 +6,7 @@ export class Log {
   private static _channel: OutputChannel
 
   static get outputChannel(): OutputChannel {
-    if (!this._channel)
-      this._channel = window.createOutputChannel(EXT_NAME)
+    if (!this._channel) this._channel = window.createOutputChannel(EXT_NAME)
     return this._channel
   }
 
@@ -20,12 +19,15 @@ export class Log {
   }
 
   static warn(message: string, prompt = false, indent = 0) {
-    if (prompt)
-      window.showWarningMessage(message)
+    if (prompt) window.showWarningMessage(message)
     Log.info(`⚠ WARN: ${message}`, indent)
   }
 
-  static async error(err: Error | string | any = {}, prompt = true, indent = 0) {
+  static async error(
+    err: Error | string | any = {},
+    prompt = true,
+    indent = 0,
+  ) {
     if (typeof err !== 'string') {
       const messages = [
         err.message,
@@ -33,19 +35,18 @@ export class Log {
         err.stack,
         err.toJSON?.(),
       ]
-        .filter(Boolean).join('\n')
+        .filter(Boolean)
+        .join('\n')
       Log.info(`🐛 ERROR: ${err.name}: ${messages}`, indent)
     }
 
     if (prompt) {
       const openOutputButton = i18n.t('prompt.show_error_log')
-      const message = typeof err === 'string'
-        ? err
-        : `${EXT_NAME} Error: ${err.toString()}`
+      const message
+        = typeof err === 'string' ? err : `${EXT_NAME} Error: ${err.toString()}`
 
       const result = await window.showErrorMessage(message, openOutputButton)
-      if (result === openOutputButton)
-        this.show()
+      if (result === openOutputButton) this.show()
     }
   }
 

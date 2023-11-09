@@ -5,6 +5,7 @@ import keyManipulations from './keyManipulations'
 import extractText from './extractString'
 import detectHardStrings from './detectHardStrings'
 import help from './help'
+import account from './account'
 import refreshUsageReport from './refreshUsageReport'
 import editor from './openEditor'
 import review from './review'
@@ -16,6 +17,7 @@ import { ExtensionModule } from '~/modules'
 
 const m: ExtensionModule = (ctx) => {
   return flatten([
+    account(ctx),
     configLocales(ctx),
     configLanguages(ctx),
     keyManipulations(ctx),

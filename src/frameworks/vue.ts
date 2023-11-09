@@ -45,14 +45,15 @@ class VueFramework extends Framework {
       case 'html-attribute':
         return [`$t(${params})`]
       case 'js-string':
-        return [`this.$t(${params})`, `i18n.t(${params})`, `t(${params})`]
+        // return [`this.$t(${params})`, `i18n.t(${params})`, `t(${params})`]
+        return [`i18n.t(${params})`, `t(${params})`, `this.$t(${params})` ]
     }
 
     return [
       `{{ $t(${params}) }}`,
-      `this.$t(${params})`,
       `$t(${params})`,
       `i18n.t(${params})`,
+      `this.$t(${params})`,
       // vue-i18n-next
       `{{ t(${params}) }}`,
       `t(${params})`,

@@ -45,6 +45,13 @@ export class Config {
   ]
 
   static ctx: ExtensionContext
+  static get loginApi() {
+    return Config.getConfig<string>('loginApi') ?? ''
+  }
+
+  static get i18nReplaceApi() {
+    return Config.getConfig<string>('i18nReplaceApi') ?? ''
+  }
 
   static get root() {
     return workspace.rootPath!

@@ -1,8 +1,8 @@
 {
   "publisher": "lokalise",
-  "name": "i18n-ally",
-  "version": "2.12.0",
-  "displayName": "i18n Ally",
+  "name": "okki-i18n",
+  "version": "0.1.0",
+  "displayName": "okki-i18n",
   "description": "🌍 All in one i18n extension for VS Code",
   "keywords": [
     "vue",
@@ -245,7 +245,7 @@
       {
         "command": "i18n-ally.extract-hard-strings-batch",
         "category": "%extname%",
-        "title": "Extract all hard-coded strings (experimental)"
+        "title": "🪄 国际化当前文件(Beta)"
       },
       {
         "command": "i18n-ally.detect_hard_strings",
@@ -256,6 +256,16 @@
         "command": "i18n-ally.open-url",
         "category": "%extname%",
         "title": "%command.open_url%"
+      },
+      {
+        "command": "i18n-ally.open-i18n-url",
+        "category": "%extname%",
+        "title": "🪄 打开国际化管理后台"
+      },
+      {
+        "command": "i18n-ally.login",
+        "category": "%extname%",
+        "title": "🪄 登录OKKI-i18n"
       },
       {
         "command": "i18n-ally.fulfill-keys",
@@ -400,6 +410,23 @@
       }
     ],
     "menus": {
+      "editor/context": [
+        {
+          "command": "i18n-ally.extract-hard-strings-batch",
+          "when": "editorTextFocus",
+          "group": "navigation@0"
+        },
+        {
+          "command": "i18n-ally.open-i18n-url",
+          "when": "editorTextFocus",
+          "group": "navigation@0"
+        },
+        {
+          "command": "i18n-ally.login",
+          "when": "editorTextFocus",
+          "group": "navigation@0"
+        }
+      ],
       "commandPalette": [
         {
           "command": "i18n-ally.set-display-language",
@@ -435,6 +462,14 @@
         },
         {
           "command": "i18n-ally.open-url",
+          "when": "false"
+        },
+        {
+          "command": "i18n-ally.open-i18n-url",
+          "when": "false"
+        },
+        {
+          "command": "i18n-ally.login",
           "when": "false"
         },
         {
@@ -614,6 +649,11 @@
           "when": "view =~ /i18n-ally-locales-usage/"
         },
         {
+          "command": "i18n-ally.login",
+          "when": "view =~ /i18n-ally-locales-usage/",
+          "group": "navigation"
+        },
+        {
           "command": "i18n-ally.new-key",
           "group": "navigation",
           "when": "view =~ /i18n-ally-locales-tree/"
@@ -741,6 +781,14 @@
         "i18n-ally.sourceLanguage": {
           "type": "string",
           "description": "%config.source_language%"
+        },
+        "i18n-ally.loginApi": {
+          "type": "string",
+          "description": "loginApi"
+        },
+        "i18n-ally.i18nReplaceApi": {
+          "type": "string",
+          "description": "i18nReplaceApi"
         },
         "i18n-ally.displayLanguage": {
           "type": "string",
