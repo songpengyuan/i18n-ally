@@ -26,7 +26,7 @@ jobs:
       # that VSCode knows about by default, so those are ignored. It requires extensions to teach it about the `vue`
       # identifier, otherwise it marks the files as `plaintext`, the vue I18next framework doesn't run, and the tests
       # fail.
-      # Instead of installing a separate Vue extension just for this identifier, for the tests, we have i18n-ally itself
+      # Instead of installing a separate Vue extension just for this identifier, for the tests, we have okki-i18n itself
       # tell VSCode about the `vue` language identifier.
       - name: Register `vue` as a VSCode language identifier
         if: runner.os != 'Windows'

@@ -1,9 +1,9 @@
 
 export enum ViewIds {
-  progress = 'i18n-ally-locales-progress',
-  tree = 'i18n-ally-locales-tree',
-  feedback = 'i18n-ally-help-feedback',
-  usage = 'i18n-ally-locales-usage',
-  file = 'i18n-ally-locales-sidebar-file',
-  file_in_explorer = 'i18n-ally-locales-file-explorer',
+  progress = 'okki-i18n-locales-progress',
+  tree = 'okki-i18n-locales-tree',
+  feedback = 'okki-i18n-help-feedback',
+  usage = 'okki-i18n-locales-usage',
+  file = 'okki-i18n-locales-sidebar-file',
+  file_in_explorer = 'okki-i18n-locales-file-explorer',
 }

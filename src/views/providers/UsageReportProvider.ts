@@ -22,7 +22,7 @@ export class UsageReportProvider implements TreeDataProvider<TreeItem> {
     this.usages = usages
     const enabled = !!(this.usages.active.length || this.usages.idle.length)
 
-    commands.executeCommand('setContext', 'i18n-ally-has-report', enabled)
+    commands.executeCommand('setContext', 'okki-i18n-has-report', enabled)
     this.refresh()
     if (enabled && this.rootItems.length)
       this.view?.reveal(this.rootItems[0])

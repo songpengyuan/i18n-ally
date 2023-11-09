@@ -25,7 +25,7 @@ class TapdLogin {
     Log.info(
       `login: username/password: ${params.username}/${'*'.repeat(
         params.password.length,
-      )}}`,
+      )}`,
       1,
     )
     Log.info(`login: loginApi: ${this.loginApi}`, 1)

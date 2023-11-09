@@ -26,34 +26,34 @@
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": false,
-  "i18n-ally.localesPaths": "./locales",
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.keystyle": "flat",
-  "i18n-ally.preferredDelimiter": "_",
-  "i18n-ally.sortKeys": true,
-  "i18n-ally.sortCompare": "binary",
-  "i18n-ally.keepFulfilled": true,
-  "i18n-ally.translate.promptSource": true,
-  "i18n-ally.pathMatcher": "{locale}.json",
-  "i18n-ally.translate.saveAsCandidates": true,
-  "i18n-ally.keysInUse": [
+  "okki-i18n.localesPaths": "./locales",
+  "okki-i18n.sourceLanguage": "en",
+  "okki-i18n.keystyle": "flat",
+  "okki-i18n.preferredDelimiter": "_",
+  "okki-i18n.sortKeys": true,
+  "okki-i18n.sortCompare": "binary",
+  "okki-i18n.keepFulfilled": true,
+  "okki-i18n.translate.promptSource": true,
+  "okki-i18n.pathMatcher": "{locale}.json",
+  "okki-i18n.translate.saveAsCandidates": true,
+  "okki-i18n.keysInUse": [
     "view.progress_submenu.translated_keys",
     "view.progress_submenu.missing_keys",
     "view.progress_submenu.empty_keys"
   ],
-  "i18n-ally.usage.scanningIgnore": [
+  "okki-i18n.usage.scanningIgnore": [
     "examples",
   ],
-  "i18n-ally.regex.usageMatchAppend": [
+  "okki-i18n.regex.usageMatchAppend": [
     "/\\*\\s*i18n\\s*\\*/\\s*['\"`]({key})['\"`]"
   ],
-  "i18n-ally.enabledFrameworks": [
+  "okki-i18n.enabledFrameworks": [
     "vscode",
     "vue",
     "general"
   ],
-  "i18n-ally.theme.annotationMissingBorder": "#d37070",
-  "i18n-ally.theme.annotationMissing": "#d37070",
+  "okki-i18n.theme.annotationMissingBorder": "#d37070",
+  "okki-i18n.theme.annotationMissing": "#d37070",
   "eslint.validate": [
     "javascript",
     "typescript",

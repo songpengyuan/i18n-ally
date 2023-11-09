@@ -13,12 +13,13 @@
     <p v-t='"nested.greeting"' />
     <p v-t="invalid" />
 
-    <!-- Component interpolation -->
+    {{ $t('eXJoZp1UT') }} <!-- Component interpolation -->
     <i18n
       path="term"
       tag="label"
       for="tos"
     >
+    {{ $t('QgMGcKydS') }}
       <a
         :href="url"
         target="_blank"
@@ -41,7 +42,7 @@
 
 <script>
 export default {
-  name: 'App',
+  name: i18n.t('DxU75GMaah'),
 
   data: () => ({
     invalid: 'invalid',

@@ -1,5 +1,5 @@
 export default {
-  github: 'https://github.com/lokalise/i18n-ally',
-  document: 'https://github.com/lokalise/i18n-ally/blob/master/README.md',
-  issues: 'https://github.com/lokalise/i18n-ally/issues',
+  github: 'https://xmkm.yuque.com/armee3/iu926w/num5bm4srpngva96?singleDoc#',
+  document: 'https://xmkm.yuque.com/armee3/iu926w/num5bm4srpngva96?singleDoc#',
+  issues: 'https://xmkm.yuque.com/armee3/iu926w/num5bm4srpngva96?singleDoc#',
 }

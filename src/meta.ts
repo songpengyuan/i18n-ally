@@ -1,10 +1,10 @@
-export const EXT_NAMESPACE = 'i18n-ally'
-export const EXT_ID = 'lokalise.i18n-ally'
-export const EXT_NAME = 'i18n Ally'
-export const EXT_EDITOR_ID = 'i18n-ally-editor'
-export const EXT_REVIEW_ID = 'i18n-ally-review'
+export const EXT_NAMESPACE = 'okki-i18n'
+export const EXT_ID = 'perrysong.okki-i18n'
+export const EXT_NAME = 'OKKI i18n'
+export const EXT_EDITOR_ID = 'okki-i18n-editor'
+export const EXT_REVIEW_ID = 'okki-i18n-review'
 
-export const EXT_LEGACY_NAMESPACE = 'vue-i18n-ally'
+export const EXT_LEGACY_NAMESPACE = 'vue-okki-i18n'
 
 export const KEY_REG_DEFAULT = '[\\w\\d\\. \\-\\[\\]\\/:]*?'
 export const KEY_REG_ALL = '.*?'

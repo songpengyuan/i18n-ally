@@ -1,9 +1,9 @@
 {
-  "i18n-ally.enabledFrameworks": ["general"],
-  "i18n-ally.localesPaths": ".",
-  "i18n-ally.pathMatcher": "messages.{locale}.json",
-  "i18n-ally.enabledParsers": ["json"],
-  "i18n-ally.displayLanguage": "en",
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.keystyle": "nested"
+  "okki-i18n.enabledFrameworks": ["general"],
+  "okki-i18n.localesPaths": ".",
+  "okki-i18n.pathMatcher": "messages.{locale}.json",
+  "okki-i18n.enabledParsers": ["json"],
+  "okki-i18n.displayLanguage": "en",
+  "okki-i18n.sourceLanguage": "en",
+  "okki-i18n.keystyle": "nested"
 }

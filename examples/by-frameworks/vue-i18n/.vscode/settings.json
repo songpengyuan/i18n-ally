@@ -1,11 +1,12 @@
 {
-  "i18n-ally.localesPaths": "locales",
-  "i18n-ally.regex.key": ".*?",
-  "i18n-ally.sourceLanguage": "zh-cn",
-  "i18n-ally.loginApi": "https://ezreal.dev.xiaoman.cn/api/auth/login",
-  "i18n-ally.i18nReplaceApi": "http://localhost:9010/api/i18ns/vscode",
-  "i18n-ally.keysInUse": [
+  "okki-i18n.localesPaths": "locales",
+  "okki-i18n.regex.key": ".*?",
+  "okki-i18n.sourceLanguage": "zh-cn",
+  "okki-i18n.loginApi": "https://ezreal.dev.xiaoman.cn/api/auth/login",
+  "okki-i18n.i18nReplaceApi": "http://localhost:9010/api/i18ns/vscode",
+  "okki-i18n.keysInUse": [
     "date.long.*",
     "yeah"
   ],
+  "okki-i18n.keystyle": "nested",
 }

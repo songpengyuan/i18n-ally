@@ -1,4 +1,4 @@
-# Contributing to i18n-ally
+# Contributing to okki-i18n
 
 ## Rules
 

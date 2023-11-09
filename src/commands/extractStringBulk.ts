@@ -23,7 +23,7 @@ export async function BatchHardStringExtraction(args: any, ctx: any) {
   const username = ctx.globalState.get(GLOBAL_STATE_LOGIN_USER_NAME)
   if (!username) {
     Log.error('需要先登录在使用')
-    commands.executeCommand('i18n-ally.login').then(
+    commands.executeCommand('okki-i18n.login').then(
       () => {
         // 命令执行成功的处理逻辑
         Log.info('触发登录命令执行成功')
