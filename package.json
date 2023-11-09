@@ -1,7 +1,7 @@
 {
-  "publisher": "lokalise",
+  "publisher": "OKKIFETEAM",
   "name": "okki-i18n",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "displayName": "okki-i18n",
   "description": "🌍 All in one i18n extension for VS Code",
   "keywords": [
@@ -11,9 +11,11 @@
     "i18n",
     "i18next"
   ],
+  "author": "PerrySong <perrysong@xiaoman.cn>",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/perrysong/okki-i18n"
+    "url": "https://gitlab.xiaoman.cc/perrysong/okki-i18n"
   },
   "main": "./dist/extension",
   "scripts": {
