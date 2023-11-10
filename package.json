@@ -1,9 +1,9 @@
 {
   "publisher": "OKKIFETEAM",
   "name": "okki-i18n",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "okki-i18n",
-  "description": "🌍 All in one i18n extension for VS Code",
+  "description": "🌍 All in one i18n extension for VS Code, powered by i18n ally ",
   "keywords": [
     "vue",
     "vue-i18n",
