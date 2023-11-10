@@ -968,6 +968,10 @@
           "type": "boolean",
           "description": "%config.namespace%"
         },
+        "okki-i18n.supplementNamespace": {
+          "type": "string",
+          "description": "补充namespace(key没有命名空间时)"
+        },
         "okki-i18n.pathMatcher": {
           "type": "string",
           "description": "%config.path_matcher%"

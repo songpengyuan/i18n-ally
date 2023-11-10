@@ -57,7 +57,7 @@ class ExtractProvider implements CodeActionProvider {
       )
       extract.command = {
         command: Commands.extract_text,
-        title: `${i18n.t('refactor.extract_text')}___001`,
+        title: `${i18n.t('refactor.extract_text')}`,
         arguments: [
           DetectionResultToExtraction(diagnostic.detection, document),
           diagnostic.detection,
@@ -110,7 +110,7 @@ class ExtractProvider implements CodeActionProvider {
 
     actions.push({
       command: Commands.extract_text,
-      title: `${i18n.t('refactor.extract_text')}__003`,
+      title: `${i18n.t('refactor.extract_text')}`,
       arguments: [],
     })
 
@@ -139,13 +139,19 @@ class ExtractProvider implements CodeActionProvider {
           diagnostic?.detection,
         ),
       )
-      .map(t => ({
-        command: Commands.replace_with,
-        title: i18n.t('refactor.replace_with', t),
-        arguments: [t],
-      }))
+      .map((t) => {
+        let newt = t
+        if (Config.supplementNamespace)
+          newt = newt.replace(`${Config.supplementNamespace}`, '')
+        return {
+          command: Commands.replace_with,
+          title: i18n.t('refactor.replace_with', newt),
+          arguments: [newt],
+        }
+      })
       .forEach(c => actions.push(c))
 
+    // Config.supplementNamespace
     return actions
   }
 }

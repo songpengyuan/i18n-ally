@@ -37,7 +37,7 @@ export async function generateKeyFromText(
     'en': '',
     'desc': `vscode: ${filepath}`,
     'platform': ['galio'],
-    'app': ['galio'],
+    'app': [Config.supplementNamespace],
     'version': '0.0.1',
     'username': username,
   }

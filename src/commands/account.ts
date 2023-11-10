@@ -14,6 +14,8 @@ class TapdLogin {
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context
+    if (Config.loginApi)
+      this.loginApi = Config.loginApi
   }
 
   private handleLogin() {
@@ -37,7 +39,7 @@ class TapdLogin {
           globalState.update(GLOBAL_STATE_LOGIN_USER_NAME, params.username)
           Log.info(`✅登录成功: ${params.username}`, 1)
           vscode.window.showInformationMessage(
-            `✅ ${params.username} 登录成功 `,
+            `用户 “${params.username}” 登录成功 `,
           )
         }
         else {
@@ -101,7 +103,7 @@ class TapdLogin {
     )
     if (result === '确定') {
       this.context.globalState.update(GLOBAL_STATE_LOGIN_USER_NAME, '')
-      vscode.window.showInformationMessage(`🔔  已退出登录 ${username}`)
+      vscode.window.showInformationMessage(`用户 “${username}” 已退出登录 `)
     }
   }
 }
@@ -111,6 +113,7 @@ export default <ExtensionModule> function(ctx) {
     commands.registerCommand(Commands.login, async() => {
       Log.info('登录: ')
       Log.info(`Config-loginApi: ${Config.loginApi}`, 1)
+
       const tapdLogin = new TapdLogin(ctx)
       tapdLogin.init()
     }),

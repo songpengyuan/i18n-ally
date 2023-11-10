@@ -5,13 +5,27 @@ import _, { uniq, throttle, set } from 'lodash'
 import fs from 'fs-extra'
 import { findBestMatch } from 'string-similarity'
 import { FILEWATCHER_TIMEOUT } from '../../meta'
-import { ParsedFile, PendingWrite, DirStructure, TargetPickingStrategy } from '../types'
+import {
+  ParsedFile,
+  PendingWrite,
+  DirStructure,
+  TargetPickingStrategy,
+} from '../types'
 import { LocaleTree } from '../Nodes'
 import { AllyError, ErrorType } from '../Errors'
 import { Analyst, Global, Config } from '..'
 import { Telemetry, TelemetryKey } from '../Telemetry'
 import { Loader } from './Loader'
-import { ReplaceLocale, Log, applyPendingToObject, unflatten, NodeHelper, getCache, setCache, getLocaleCompare } from '~/utils'
+import {
+  ReplaceLocale,
+  Log,
+  applyPendingToObject,
+  unflatten,
+  NodeHelper,
+  getCache,
+  setCache,
+  getLocaleCompare,
+} from '~/utils'
 import i18n from '~/i18n'
 
 const THROTTLE_DELAY = 1500
@@ -62,11 +76,9 @@ export class LocaleLoader extends Loader {
       .sort()
       .value()
 
-    const locales = allLocales
-      .filter(i => i !== source && i !== display)
+    const locales = allLocales.filter(i => i !== source && i !== display)
 
-    if (allLocales.includes(display))
-      locales.unshift(display)
+    if (allLocales.includes(display)) locales.unshift(display)
 
     if (display !== source && allLocales.includes(source))
       locales.unshift(source)
@@ -75,30 +87,41 @@ export class LocaleLoader extends Loader {
   }
 
   // #region throttled functions
-  private throttledFullReload = throttle(async() => {
-    Log.info('🔄 Perfroming a full reload', 2)
-    await this.loadAll(false)
-    this.update()
-  }, THROTTLE_DELAY, { leading: true })
+  private throttledFullReload = throttle(
+    async() => {
+      Log.info('🔄 Perfroming a full reload', 2)
+      await this.loadAll(false)
+      this.update()
+    },
+    THROTTLE_DELAY,
+    { leading: true },
+  )
 
-  private throttledUpdate = throttle(() => {
-    this.update()
-  }, THROTTLE_DELAY, { leading: true })
+  private throttledUpdate = throttle(
+    () => {
+      this.update()
+    },
+    THROTTLE_DELAY,
+    { leading: true },
+  )
 
   private throttledLoadFileWaitingList: [string, string][] = []
 
-  private throttledLoadFileExecutor = throttle(async() => {
-    const list = this.throttledLoadFileWaitingList
-    this.throttledLoadFileWaitingList = []
-    if (list.length) {
-      let changed = false
-      for (const [d, r] of list)
-        changed = await this.loadFile(d, r) || changed
+  private throttledLoadFileExecutor = throttle(
+    async() => {
+      const list = this.throttledLoadFileWaitingList
+      this.throttledLoadFileWaitingList = []
+      if (list.length) {
+        let changed = false
+        for (const [d, r] of list)
+          changed = (await this.loadFile(d, r)) || changed
 
-      if (changed)
-        this.update()
-    }
-  }, THROTTLE_DELAY, { leading: true })
+        if (changed) this.update()
+      }
+    },
+    THROTTLE_DELAY,
+    { leading: true },
+  )
 
   private throttledLoadFile = (d: string, r: string) => {
     if (!this.throttledLoadFileWaitingList.find(([a, b]) => a === d && b === r))
@@ -118,8 +141,7 @@ export class LocaleLoader extends Loader {
     const POSITIVE_RATE = 0.6
 
     const config = Global.dirStructure
-    if (config !== 'auto')
-      return config
+    if (config !== 'auto') return config
 
     const dir = this._locale_dirs[0]
 
@@ -131,20 +153,14 @@ export class LocaleLoader extends Loader {
     })
 
     const total = dirnames.length
-    if (total === 0)
-      return 'file'
+    if (total === 0) return 'file'
 
-    const positives = dirnames
-      .map(d => Config.tagSystem.lookup(d))
+    const positives = dirnames.map(d => Config.tagSystem.lookup(d))
 
-    const positive = positives
-      .filter(d => d)
-      .length
+    const positive = positives.filter(d => d).length
 
     // if there are some dirs are named as locale code, guess it's dir mode
-    return (positive / total) >= POSITIVE_RATE
-      ? 'dir'
-      : 'file'
+    return positive / total >= POSITIVE_RATE ? 'dir' : 'file'
   }
 
   async requestMissingFilepath(pending: PendingWrite) {
@@ -152,25 +168,33 @@ export class LocaleLoader extends Loader {
 
     // try to match namespaces
     if (Config.namespace) {
-      const namespace = pending.namespace || this.getNodeByKey(keypath)?.meta?.namespace
+      const namespace
+        = pending.namespace || this.getNodeByKey(keypath)?.meta?.namespace || Config.supplementNamespace
 
-      const filesSameLocale = this.files.find(f => f.namespace === namespace && f.locale === locale)
+      const filesSameLocale = this.files.find(
+        f => f.namespace === namespace && f.locale === locale,
+      )
 
-      if (filesSameLocale)
-        return filesSameLocale.filepath
+      if (filesSameLocale) return filesSameLocale.filepath
 
-      const fileSource = this.files.find(f => f.namespace === namespace && f.locale === Config.sourceLanguage)
+      const fileSource = this.files.find(
+        f => f.namespace === namespace && f.locale === Config.sourceLanguage,
+      )
       if (fileSource && fileSource.matcher) {
         const relative = path.relative(fileSource.dirpath, fileSource.filepath)
-        const newFilepath = ReplaceLocale(relative, fileSource.matcher, locale, Global.enabledParserExts)
+        const newFilepath = ReplaceLocale(
+          relative,
+          fileSource.matcher,
+          locale,
+          Global.enabledParserExts,
+        )
         return path.join(fileSource.dirpath, newFilepath)
       }
     }
 
     const paths = this.getFilepathsOfLocale(locale)
 
-    if (paths.length === 1)
-      return paths[0]
+    if (paths.length === 1) return paths[0]
 
     if (paths.length === 0) {
       return await window.showInputBox({
@@ -180,19 +204,37 @@ export class LocaleLoader extends Loader {
       })
     }
 
-    if (Config.targetPickingStrategy === TargetPickingStrategy.MostSimilar && pending.textFromPath)
+    if (
+      Config.targetPickingStrategy === TargetPickingStrategy.MostSimilar
+      && pending.textFromPath
+    )
       return this.findBestMatchFile(pending.textFromPath, paths)
 
-    if (Config.targetPickingStrategy === TargetPickingStrategy.MostSimilarByKey && keypath) {
-      const splitSymbol = Config.namespace ? Global.getNamespaceDelimiter() : '.'
+    if (
+      Config.targetPickingStrategy === TargetPickingStrategy.MostSimilarByKey
+      && keypath
+    ) {
+      const splitSymbol = Config.namespace
+        ? Global.getNamespaceDelimiter()
+        : '.'
       const prefixKey = keypath.split(splitSymbol)[0]
-      const matched = this.findBestMatchFile(`${this._locale_dirs}/${prefixKey}`, paths)
-      if (matched.includes(prefixKey))
-        return matched
+      const matched = this.findBestMatchFile(
+        `${this._locale_dirs}/${prefixKey}`,
+        paths,
+      )
+      if (matched.includes(prefixKey)) return matched
     }
 
-    if (Config.targetPickingStrategy === TargetPickingStrategy.FilePrevious && pending.textFromPath)
-      return this.handleExtractToFilePrevious(pending.textFromPath, paths, keypath)
+    if (
+      Config.targetPickingStrategy === TargetPickingStrategy.FilePrevious
+      && pending.textFromPath
+    ) {
+      return this.handleExtractToFilePrevious(
+        pending.textFromPath,
+        paths,
+        keypath,
+      )
+    }
 
     if (Config.targetPickingStrategy === TargetPickingStrategy.GlobalPrevious)
       return this.handleExtractToGlobalPrevious(paths, keypath)
@@ -210,7 +252,8 @@ export class LocaleLoader extends Loader {
       {
         placeHolder: i18n.t('prompt.select_file_to_store_key', keypath),
         ignoreFocusOut: true,
-      })
+      },
+    )
 
     return result?.path
   }
@@ -221,13 +264,16 @@ export class LocaleLoader extends Loader {
    * @param paths: paths of locale files
    * @param keypath
    */
-  async handleExtractToFilePrevious(fromPath: string, paths: string[], keypath: string): Promise<string | void> {
+  async handleExtractToFilePrevious(
+    fromPath: string,
+    paths: string[],
+    keypath: string,
+  ): Promise<string | void> {
     const cacheKey = 'perFilePickingTargets'
     const pickingTargets: any = getCache(cacheKey, {})
     const cachedPath = pickingTargets[fromPath]
 
-    if (cachedPath)
-      return cachedPath
+    if (cachedPath) return cachedPath
 
     const newPath = await this.promptPathToSave(paths, keypath)
     pickingTargets[fromPath] = newPath
@@ -241,12 +287,14 @@ export class LocaleLoader extends Loader {
    * @param paths: paths of locale files
    * @param keypath
    */
-  async handleExtractToGlobalPrevious(paths: any, keypath: string): Promise<string | void> {
+  async handleExtractToGlobalPrevious(
+    paths: any,
+    keypath: string,
+  ): Promise<string | void> {
     const cacheKey = 'globalPickingTargets'
     const pickingTarget = getCache<string>(cacheKey)
 
-    if (pickingTarget)
-      return pickingTarget
+    if (pickingTarget) return pickingTarget
 
     const newPath = await this.promptPathToSave(paths, keypath)
 
@@ -259,9 +307,8 @@ export class LocaleLoader extends Loader {
     return findBestMatch(fromPath, paths).bestMatch.target
   }
 
-  async write(pendings: PendingWrite|PendingWrite[]) {
-    if (!Array.isArray(pendings))
-      pendings = [pendings]
+  async write(pendings: PendingWrite | PendingWrite[]) {
+    if (!Array.isArray(pendings)) pendings = [pendings]
 
     pendings = pendings.filter(i => i)
 
@@ -269,17 +316,21 @@ export class LocaleLoader extends Loader {
 
     // distribute pendings writes by files
     for (const pending of pendings) {
-      const filepath = pending.filepath || await this.requestMissingFilepath(pending)
+      const filepath
+        = pending.filepath || (await this.requestMissingFilepath(pending))
       if (!filepath) {
-        Log.info(`💥 Unable to find path for writing ${JSON.stringify(pending)}`)
+        Log.info(
+          `💥 Unable to find path for writing ${JSON.stringify(pending)}`,
+        )
         continue
       }
 
-      if (Config.namespace)
-        pending.namespace = pending.namespace || this._files[filepath]?.namespace
+      if (Config.namespace) {
+        pending.namespace
+          = pending.namespace || this._files[filepath]?.namespace
+      }
 
-      if (!distributed[filepath])
-        distributed[filepath] = []
+      if (!distributed[filepath]) distributed[filepath] = []
       distributed[filepath].push(pending)
     }
 
@@ -309,7 +360,11 @@ export class LocaleLoader extends Loader {
 
           if (Global.namespaceEnabled) {
             const node = this.getNodeByKey(keypath)
-            keypath = NodeHelper.getPathWithoutNamespace(keypath, node, pending.namespace)
+            keypath = NodeHelper.getPathWithoutNamespace(
+              keypath,
+              node,
+              pending.namespace,
+            )
           }
 
           modified = applyPendingToObject(
@@ -325,9 +380,10 @@ export class LocaleLoader extends Loader {
         const processingContext = { locale, targetFile: filepath }
         const processed = this.deprocessData(modified, processingContext)
 
-        const compare = Config.sortCompare === 'locale'
-          ? getLocaleCompare(Config.sortLocale, locale)
-          : undefined
+        const compare
+          = Config.sortCompare === 'locale'
+            ? getLocaleCompare(Config.sortLocale, locale)
+            : undefined
         await parser.save(filepath, processed, Config.sortKeys, compare)
 
         if (this._files[filepath]) {
@@ -369,24 +425,25 @@ export class LocaleLoader extends Loader {
       .entries()
       .flatMap(([filepath, file]) => {
         const value = _.get(file.value, oldkey)
-        if (value === undefined)
-          return []
-        return [{
-          value: undefined,
-          keypath: oldkey,
-          filepath,
-          locale: file.locale,
-        }, {
-          value: _.get(file.value, oldkey),
-          keypath: newkey,
-          filepath,
-          locale: file.locale,
-        }]
+        if (value === undefined) return []
+        return [
+          {
+            value: undefined,
+            keypath: oldkey,
+            filepath,
+            locale: file.locale,
+          },
+          {
+            value: _.get(file.value, oldkey),
+            keypath: newkey,
+            filepath,
+            locale: file.locale,
+          },
+        ]
       })
       .value()
 
-    if (!writes.length)
-      return
+    if (!writes.length) return
 
     await this.write(writes)
   }
@@ -394,8 +451,7 @@ export class LocaleLoader extends Loader {
   getNamespaceFromFilepath(filepath: string) {
     const file = this._files[filepath]
 
-    if (file)
-      return file.namespace
+    if (file) return file.namespace
   }
 
   private getFileInfo(dirpath: string, relativePath: string) {
@@ -413,21 +469,16 @@ export class LocaleLoader extends Loader {
       }
     }
 
-    if (!match || match.length < 1)
-      return
+    if (!match || match.length < 1) return
 
     let namespace = match.groups?.namespace
-    if (namespace)
-      namespace = namespace.replace(/\//g, '.')
+    if (namespace) namespace = namespace.replace(/\//g, '.')
 
     let locale = match.groups?.locale
-    if (locale)
-      locale = Config.normalizeLocale(locale, '')
-    else
-      locale = Config.sourceLanguage
+    if (locale) locale = Config.normalizeLocale(locale, '')
+    else locale = Config.sourceLanguage
 
-    if (!locale)
-      return
+    if (!locale) return
 
     const parser = Global.getMatchedParser(ext)
 
@@ -444,13 +495,10 @@ export class LocaleLoader extends Loader {
   private async loadFile(dirpath: string, relativePath: string) {
     try {
       const result = this.getFileInfo(dirpath, relativePath)
-      if (!result)
-        return
+      if (!result) return
       const { locale, parser, namespace, fullpath: filepath, matcher } = result
-      if (!parser)
-        return
-      if (!locale)
-        return
+      if (!parser) return
+      if (!locale) return
 
       const mtime = this.getMtime(filepath)
 
@@ -460,9 +508,7 @@ export class LocaleLoader extends Loader {
 
       data = this.preprocessData(data, { locale, targetFile: filepath })
 
-      const value = Config.disablePathParsing
-        ? data
-        : unflatten(data)
+      const value = Config.disablePathParsing ? data : unflatten(data)
 
       this._files[filepath] = {
         filepath,
@@ -493,16 +539,11 @@ export class LocaleLoader extends Loader {
     const files = await fg('**/*.*', {
       cwd: searchingPath,
       onlyFiles: true,
-      ignore: [
-        'node_modules/**',
-        'vendors/**',
-        ...Config.ignoreFiles,
-      ],
+      ignore: ['node_modules/**', 'vendors/**', ...Config.ignoreFiles],
       deep: Config.includeSubfolders ? undefined : 2,
     })
 
-    for (const relative of files)
-      await this.loadFile(searchingPath, relative)
+    for (const relative of files) await this.loadFile(searchingPath, relative)
   }
 
   private getMtime(filepath: string) {
@@ -624,12 +665,10 @@ export class LocaleLoader extends Loader {
           onlyDirectories: true,
         })
 
-        if (localesPaths.includes('.'))
-          _locale_dirs.push('.')
+        if (localesPaths.includes('.')) _locale_dirs.push('.')
 
         this._locale_dirs = uniq(
-          _locale_dirs
-            .map(p => path.resolve(this.rootpath, p)),
+          _locale_dirs.map(p => path.resolve(this.rootpath, p)),
         )
       }
       catch (e) {
@@ -650,8 +689,7 @@ export class LocaleLoader extends Loader {
       try {
         Log.info(`\n📂 Loading locales under ${pathname}`)
         await this.loadDirectory(pathname)
-        if (watch)
-          this.watchOn(pathname)
+        if (watch) this.watchOn(pathname)
         if (!this.files.length)
           window.showWarningMessage(i18n.t('prompt.no_locale_loaded'))
 

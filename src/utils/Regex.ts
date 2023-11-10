@@ -18,8 +18,7 @@ export function handleRegexMatch(
 ): KeyInDocument | undefined {
   const matchString = match[0]
   let key = match[1]
-  if (!key)
-    return
+  if (!key) return
 
   const start = match.index + matchString.lastIndexOf(key)
   const end = start + key.length
@@ -29,16 +28,19 @@ export function handleRegexMatch(
   const namespace = scope?.namespace || defaultNamespace
 
   // prevent duplicated detection when multiple frameworks enables at the same time.
-  if (starts.includes(start))
-    return
+  if (starts.includes(start)) return
 
   starts.push(start)
 
   // prefix the namespace
-  const hasExplicitNamespace = namespaceDelimiters.some(delimiter => key.includes(delimiter))
+  const hasExplicitNamespace = namespaceDelimiters.some(delimiter =>
+    key.includes(delimiter),
+  )
 
-  if (!hasExplicitNamespace && namespace)
-    key = `${namespace}.${key}`
+  if (!hasExplicitNamespace && namespace) key = `${namespace}.${key}`
+
+  if (!key.includes('.') && Config.supplementNamespace)
+    key = `${Config.supplementNamespace}.${key}`
 
   if (dotEnding || !key.endsWith('.')) {
     key = CurrentFile.loader.rewriteKeys(key, 'reference', {
@@ -62,8 +64,7 @@ export function regexFindKeys(
   scopes: ScopeRange[] = [],
   namespaceDelimiters?: string[],
 ): KeyInDocument[] {
-  if (Config.disablePathParsing)
-    dotEnding = true
+  if (Config.disablePathParsing) dotEnding = true
 
   const defaultNamespace = Config.defaultNamespace
   const keys: KeyInDocument[] = []
@@ -73,10 +74,18 @@ export function regexFindKeys(
     let match = null
     reg.lastIndex = 0
     // eslint-disable-next-line no-cond-assign
-    while (match = reg.exec(text)) {
-      const key = handleRegexMatch(text, match, dotEnding, rewriteContext, scopes, namespaceDelimiters, defaultNamespace, starts)
-      if (key)
-        keys.push(key)
+    while ((match = reg.exec(text))) {
+      const key = handleRegexMatch(
+        text,
+        match,
+        dotEnding,
+        rewriteContext,
+        scopes,
+        namespaceDelimiters,
+        defaultNamespace,
+        starts,
+      )
+      if (key) keys.push(key)
     }
   }
 
@@ -84,19 +93,20 @@ export function regexFindKeys(
 }
 
 export function normalizeUsageMatchRegex(reg: (string | RegExp)[]): RegExp[] {
-  return reg.map((i) => {
-    if (typeof i === 'string') {
-      try {
-        const interpated = i.replace(/{key}/g, Config.regexKey)
-        return new RegExp(interpated, 'gm')
+  return reg
+    .map((i) => {
+      if (typeof i === 'string') {
+        try {
+          const interpated = i.replace(/{key}/g, Config.regexKey)
+          return new RegExp(interpated, 'gm')
+        }
+        catch (e) {
+          Log.error(i18n.t('prompt.error_on_parse_custom_regex', i), true)
+          Log.error(e, false)
+          return undefined
+        }
       }
-      catch (e) {
-        Log.error(i18n.t('prompt.error_on_parse_custom_regex', i), true)
-        Log.error(e, false)
-        return undefined
-      }
-    }
-    return i
-  })
+      return i
+    })
     .filter(i => i) as RegExp[]
 }
