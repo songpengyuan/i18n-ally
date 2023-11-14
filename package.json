@@ -1,7 +1,7 @@
 {
   "publisher": "OKKIFETEAM",
   "name": "okki-i18n",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "displayName": "okki-i18n",
   "description": "🌍 All in one i18n extension for VS Code, powered by i18n ally ",
   "keywords": [
@@ -255,6 +255,11 @@
         "title": "Detect hard-coded strings in current file (experimental)"
       },
       {
+        "command": "okki-i18n.detect_hard_strings_batch",
+        "category": "%extname%",
+        "title": "🪄 漏翻检测"
+      },
+      {
         "command": "okki-i18n.open-url",
         "category": "%extname%",
         "title": "%command.open_url%"
@@ -425,6 +430,11 @@
         },
         {
           "command": "okki-i18n.login",
+          "when": "editorTextFocus",
+          "group": "navigation@0"
+        },
+        {
+          "command": "okki-i18n.detect_hard_strings_batch",
           "when": "editorTextFocus",
           "group": "navigation@0"
         }
@@ -655,6 +665,10 @@
       "explorer/context": [
         {
           "command": "okki-i18n.extract-hard-strings-batch",
+          "group": "1_i18nally@1"
+        },
+        {
+          "command": "okki-i18n.detect_hard_strings_batch",
           "group": "1_i18nally@1"
         }
       ],

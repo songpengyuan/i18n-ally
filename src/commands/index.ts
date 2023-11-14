@@ -13,6 +13,7 @@ import deepl from './deepl'
 import gotoRange from './gotoRange'
 import gotoNextUsage from './gotoNextUsage'
 import batchHardStringsExtract from './extractStringBulk'
+import batchDetectHardStrings from './detectHardStringsBulk'
 import { ExtensionModule } from '~/modules'
 
 const m: ExtensionModule = (ctx) => {
@@ -23,6 +24,7 @@ const m: ExtensionModule = (ctx) => {
     keyManipulations(ctx),
     extractText(ctx),
     detectHardStrings(ctx),
+    batchDetectHardStrings(ctx),
     batchHardStringsExtract(ctx),
     help(ctx),
     refreshUsageReport(ctx),

@@ -6,15 +6,26 @@ import { Commands } from '~/commands'
 import { trimDetection } from '~/extraction'
 import i18n from '~/i18n'
 
-export async function DetectHardStrings(document = window.activeTextEditor?.document, warn = true) {
-  if (!document)
-    return
+function isContainsChinese(text: string) {
+  if (!text || typeof text !== 'string') return false
+  const chineseRegExp = /[\u4E00-\u9FA5]/
+  return chineseRegExp.test(text)
+}
+
+export async function DetectHardStrings(
+  document = window.activeTextEditor?.document,
+  warn = true,
+) {
+  if (!document) return
 
   const frameworks = Global.getExtractionFrameworksByLang(document.languageId)
 
   if (!frameworks.length) {
-    if (warn)
-      window.showWarningMessage(i18n.t('refactor.extracting_not_support_for_lang', document.languageId))
+    if (warn) {
+      window.showWarningMessage(
+        i18n.t('refactor.extracting_not_support_for_lang', document.languageId),
+      )
+    }
     return
   }
 
@@ -30,14 +41,19 @@ export async function DetectHardStrings(document = window.activeTextEditor?.docu
         document,
       })) as DetectionResult[]
 
-    if (temp.length)
-      result.push(...temp)
+    if (temp.length) result.push(...temp)
   }
 
   // filter out ignored results
   const ignored = Config.extractIgnored
-  const ignoredByFiles = Config.extractIgnoredByFiles[relative(Config.root, document.uri.fsPath)] || []
-  result = result.filter(r => !ignored.includes(r.text) && !ignoredByFiles.includes(r.text))
+  const ignoredByFiles
+    = Config.extractIgnoredByFiles[relative(Config.root, document.uri.fsPath)]
+    || []
+  result = result
+    .filter(r => !ignored.includes(r.text) && !ignoredByFiles.includes(r.text))
+    .filter((item) => {
+      return isContainsChinese(item?.text)
+    })
 
   return result
 }

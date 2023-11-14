@@ -15,6 +15,7 @@ export const enum Commands {
   extract_enable_auto_detect = 'okki-i18n.extract-enable-auto-detect',
   extract_ignore = 'okki-i18n.extract-ignore',
   detect_hard_strings = 'okki-i18n.detect_hard_strings',
+  detect_hard_strings_batch = 'okki-i18n.detect_hard_strings_batch',
   replace_with = 'okki-i18n.replace-with',
   copy_key = 'okki-i18n.copy-key',
   translate_key = 'okki-i18n.translate-key',
