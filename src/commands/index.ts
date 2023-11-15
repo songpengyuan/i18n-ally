@@ -14,6 +14,7 @@ import gotoRange from './gotoRange'
 import gotoNextUsage from './gotoNextUsage'
 import batchHardStringsExtract from './extractStringBulk'
 import batchDetectHardStrings from './detectHardStringsBulk'
+import pullHardStringsFile from './pullHardStringsFile'
 import { ExtensionModule } from '~/modules'
 
 const m: ExtensionModule = (ctx) => {
@@ -26,6 +27,7 @@ const m: ExtensionModule = (ctx) => {
     detectHardStrings(ctx),
     batchDetectHardStrings(ctx),
     batchHardStringsExtract(ctx),
+    pullHardStringsFile(ctx),
     help(ctx),
     refreshUsageReport(ctx),
     editor(ctx),

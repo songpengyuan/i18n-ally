@@ -3,7 +3,7 @@
   "name": "okki-i18n",
   "version": "0.1.2",
   "displayName": "okki-i18n",
-  "description": "🌍 All in one i18n extension for VS Code, powered by i18n ally ",
+  "description": "🌟（LittleStar）  All in one i18n extension for VS Code, powered by i18n ally ",
   "keywords": [
     "vue",
     "vue-i18n",
@@ -247,7 +247,7 @@
       {
         "command": "okki-i18n.extract-hard-strings-batch",
         "category": "%extname%",
-        "title": "🪄 国际化当前文件(Beta)"
+        "title": "🌟 翻译当前文件(Beta)"
       },
       {
         "command": "okki-i18n.detect_hard_strings",
@@ -257,7 +257,12 @@
       {
         "command": "okki-i18n.detect_hard_strings_batch",
         "category": "%extname%",
-        "title": "🪄 漏翻检测"
+        "title": "🌟 漏翻检测"
+      },
+      {
+        "command": "okki-i18n.pull_hard_strings_file",
+        "category": "%extname%",
+        "title": "🌟 拉取远程文件 ⬇️"
       },
       {
         "command": "okki-i18n.open-url",
@@ -267,12 +272,12 @@
       {
         "command": "okki-i18n.open-i18n-url",
         "category": "%extname%",
-        "title": "🪄 打开国际化管理后台"
+        "title": "🌟 打开国际化管理后台"
       },
       {
         "command": "okki-i18n.login",
         "category": "%extname%",
-        "title": "🪄 登录OKKI-i18n"
+        "title": "🌟 登录/退出OKKI-i18n"
       },
       {
         "command": "okki-i18n.fulfill-keys",
@@ -435,6 +440,11 @@
         },
         {
           "command": "okki-i18n.detect_hard_strings_batch",
+          "when": "editorTextFocus",
+          "group": "navigation@0"
+        },
+        {
+          "command": "okki-i18n.pull_hard_strings_file",
           "when": "editorTextFocus",
           "group": "navigation@0"
         }
