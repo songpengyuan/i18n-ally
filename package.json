@@ -1,7 +1,7 @@
 {
   "publisher": "OKKIFETEAM",
   "name": "okki-i18n",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "displayName": "okki-i18n",
   "description": "🌟（LittleStar）  All in one i18n extension for VS Code, powered by i18n ally ",
   "keywords": [
@@ -670,7 +670,6 @@
           "group": "navigation",
           "when": "view =~ /okki-i18n-locales-usage/"
         }
-        
       ],
       "explorer/context": [
         {
