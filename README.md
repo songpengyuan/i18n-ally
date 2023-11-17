@@ -46,16 +46,16 @@
 <h3 align='center'><a href='https://ezreal.dev.xiaoman.cn/#/i18n'>Ezreal-Devtools
 管理后台</a></h3>
 
-![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/ez.gif?raw=true)
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/ez.jpg?raw=true)
 
 
 <h3 align='center'>从代码中提取文案</h3>
 
-![](https://www.github.com/lokalise/i18n-ally/blob/screenshots/extract.png?raw=true)
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/extract.png?raw=true)
 
 <h3 align='center'>缺失文案报告</h3>
 
-![](https://www.github.com/lokalise/i18n-ally/blob/screenshots/problems.png?raw=true)
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/problems.png?raw=true)
 
 
 <h3 align="center"> 其他功能 </h3>
