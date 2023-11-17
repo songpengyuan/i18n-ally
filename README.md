@@ -1,57 +1,69 @@
-<h3 align='center'>OKKI i18n</h3>
+<h3 align='center'>OKKI i18n （🌟 Little Star）</h3>
 
 -----
 
-[使用文档](https://xmkm.yuque.com/armee3/iu926w/num5bm4srpngva96?singleDoc#)
+ ## 📖 [使用流程文档](https://xmkm.yuque.com/armee3/iu926w/num5bm4srpngva96?singleDoc#)
 
+
+## 功能
+- 支持文案回显
+- 支持一键扫描中文
+- 支持文案上传到远程服务
+- 支持拉取线上文案，定位文案的代码位置
+- 支持翻译漏检功能
+- 支持语言切换显示
+- 支持分析统计
+- 支持配置化，满足不同开发场景
 
 
 
 <details>
-<summary align='center'><b>⚡️ 截图和功能</b></summary>
+<summary align='center'><b>⚡️ 功能截图</b></summary>
+
+<h3 align='center'>内联文案</h3>
+
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/Inline_prompt.gif?raw=true)
+
+<h3 align='center'>登录</h3>
+
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/login.gif?raw=true)
+<h3 align='center'>快捷操作</h3>
+
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/menu.jpg?raw=true)
 
 
-```
-<h3 align='center'>内联提示</h3>
-```
+<h3 align='center'>漏翻检测</h3>
+
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/check.gif?raw=true)
 
 
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/annotation-animated.gif?raw=true)
 
-<h3 align='center'>悬浮窗和快捷操作</h3>
+<h3 align='center'>翻译当前文件</h3>
 
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/hover.png?raw=true)
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/translate_files.gif?raw=true)
 
-<h3 align='center'>统一管理所有翻译</h3>
 
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/review-sidebar.png?raw=true)
+<h3 align='center'><a href='https://ezreal.dev.xiaoman.cn/#/i18n'>Ezreal-Devtools
+管理后台</a></h3>
 
-<h3 align='center'><a href='https://github.com/lokalise/okki-i18n/wiki/Editor-UI'>可视化编辑器</a> 和 <a href='https://github.com/lokalise/okki-i18n/wiki/Review-&-Collaboration-System'>审阅系统</a></h3>
+![](https://github.com/songpengyuan/i18n-ally/blob/feat/okki-i18n/0.1.0/screenshots/okki/ez.gif?raw=true)
 
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/review-editor.png?raw=true)
 
 <h3 align='center'>从代码中提取文案</h3>
 
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/extract.png?raw=true)
+![](https://www.github.com/lokalise/i18n-ally/blob/screenshots/extract.png?raw=true)
 
 <h3 align='center'>缺失文案报告</h3>
 
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/problems.png?raw=true)
+![](https://www.github.com/lokalise/i18n-ally/blob/screenshots/problems.png?raw=true)
 
-<h3 align='center'>机器翻译</h3>
-
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/quick-actions.png?raw=true)
-
-<h3 align='center'>JSON 和 YAML 的内联提示</h3>
-
-![](https://github.com/lokalise/okki-i18n/blob/screenshots/annotation-locale.png?raw=true)
 
 <h3 align="center"> 其他功能 </h3>
 
 - 支持多目录工作区
 - 支持远程开发 (Remote Development)
 - 支持大多数流行框架
-- 插件自身多语言支持 [翻译列表](https://github.com/lokalise/okki-i18n#-multilingual-support)
+- 插件自身多语言支持 [翻译列表](https://www.github.com/lokalise/i18n-ally#-multilingual-support)
 
 </details>
 
@@ -59,23 +71,23 @@
 
 ## 📖 文档
 
-[查看维基](https://github.com/lokalise/okki-i18n/wiki)!
+[查看维基](https://www.github.com/lokalise/i18n-ally/wiki)!
 
 
 ## 💭 常见问题
 
-[常见问题](https://github.com/lokalise/okki-i18n/wiki/FAQ).
+[常见问题](https://www.github.com/lokalise/i18n-ally/wiki/FAQ).
 
 
 ## 📜 支持文件格式
 
-[支持的文件格式](https://github.com/lokalise/okki-i18n/wiki/Supported-Locale-Formats).
+[支持的文件格式](https://www.github.com/lokalise/i18n-ally/wiki/Supported-Locale-Formats).
 
 
 
 ## 📄 License
 
-[MIT License](https://github.com/lokalise/okki-i18n/blob/master/LICENSE) © 2021 年至今 [Lokalise Inc.](https://github.com/lokalise)
+[MIT License](https://www.github.com/lokalise/i18n-ally/blob/master/LICENSE) © 2021 年至今 [Lokalise Inc.](https://github.com/lokalise)
 
 MIT License © 2019-2020 [Anthony Fu](https://github.com/antfu)
 
