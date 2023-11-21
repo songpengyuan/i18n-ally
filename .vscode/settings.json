@@ -27,7 +27,7 @@
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": false,
   "okki-i18n.localesPaths": "./locales",
-  "okki-i18n.sourceLanguage": "en",
+  "okki-i18n.sourceLanguage": "zh-CN",
   "okki-i18n.keystyle": "flat",
   "okki-i18n.preferredDelimiter": "_",
   "okki-i18n.sortKeys": true,

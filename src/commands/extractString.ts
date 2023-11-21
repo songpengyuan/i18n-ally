@@ -45,6 +45,7 @@ async function ExtractOrInsertCommnad(
   options?: ExtractTextOptions,
   detection?: DetectionResult,
 ) {
+  Log.warn('ExtractOrInsertCommnad start')
   Telemetry.track(TelemetryKey.ExtractString)
 
   if (Config.readonly) {
@@ -84,8 +85,26 @@ async function ExtractOrInsertCommnad(
   const { text, rawText, range, document } = options
   const filepath = document.uri.fsPath
 
+  const isReplaceLoading = Config.ctx.globalState.get('isReplaceLoading')
+  Log.info(`isReplaceLoading: ${isReplaceLoading} --${typeof isReplaceLoading}`)
+  if (isReplaceLoading) {
+    const msgButton = '取消'
+    const result = await window.showErrorMessage(
+      '翻译当前文件处理中，请稍后再试',
+      msgButton,
+    )
+    if (result === msgButton)
+      Config.ctx.globalState.update('isReplaceLoading', false)
+
+    Log.info('翻译当前文件处理中，请稍后再试', 1)
+    return
+  }
+  Config.ctx.globalState.update('isReplaceLoading', true)
+
   const key = await generateKeyFromText(rawText || text, filepath)
   const writeKeypath = CurrentFile.loader.rewriteKeys(key, 'write', { locale })
+
+  Config.ctx.globalState.update('isReplaceLoading', false)
 
   window
     .showQuickPick(
@@ -108,6 +127,7 @@ async function ExtractOrInsertCommnad(
         ])
       }
     })
+  Config.ctx.globalState.update('isReplaceLoading', false)
 }
 
 function ExtractIngore(text: string, document?: TextDocument) {

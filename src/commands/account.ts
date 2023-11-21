@@ -6,7 +6,7 @@ import { Commands } from '~/commands'
 import { Log } from '~/utils/Log'
 const GLOBAL_STATE_LOGIN_USER_NAME = 'LOGIN_USER_NAME'
 
-class TapdLogin {
+class Account {
   private loginApi = 'https://ezreal.dev.xiaoman.cn/api/auth/login'
   private username = ''
   private password = ''
@@ -114,8 +114,8 @@ export default <ExtensionModule> function(ctx) {
       Log.info('登录: ')
       Log.info(`Config-loginApi: ${Config.loginApi}`, 1)
 
-      const tapdLogin = new TapdLogin(ctx)
-      tapdLogin.init()
+      const account = new Account(ctx)
+      account.init()
     }),
   ]
 }

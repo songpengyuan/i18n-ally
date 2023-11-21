@@ -105,7 +105,7 @@ class ExtractProvider implements CodeActionProvider {
     )
     if (!result) return []
 
-    const { text, args } = result
+    // const { text, args } = result
     const actions: (Command | CodeAction)[] = []
 
     actions.push({
@@ -121,35 +121,35 @@ class ExtractProvider implements CodeActionProvider {
     // })
 
     // Check for existing translations to recommend, convert them to their templates and then to commands, and add the commands to the command array
-    CurrentFile.loader.keys
-      .map(key => ({
-        label: key,
-        description: CurrentFile.loader.getValueByKey(
-          key,
-          Config.displayLanguage,
-          30,
-        ),
-      }))
-      .filter(labelDescription => labelDescription.description === text)
-      .flatMap(t =>
-        Global.interpretRefactorTemplates(
-          t.label,
-          args,
-          document,
-          diagnostic?.detection,
-        ),
-      )
-      .map((t) => {
-        let newt = t
-        if (Config.supplementNamespace)
-          newt = newt.replace(`${Config.supplementNamespace}`, '')
-        return {
-          command: Commands.replace_with,
-          title: i18n.t('refactor.replace_with', newt),
-          arguments: [newt],
-        }
-      })
-      .forEach(c => actions.push(c))
+    // CurrentFile.loader.keys
+    //   .map(key => ({
+    //     label: key,
+    //     description: CurrentFile.loader.getValueByKey(
+    //       key,
+    //       Config.displayLanguage,
+    //       30,
+    //     ),
+    //   }))
+    //   .filter(labelDescription => labelDescription.description === text)
+    //   .flatMap(t =>
+    //     Global.interpretRefactorTemplates(
+    //       t.label,
+    //       args,
+    //       document,
+    //       diagnostic?.detection,
+    //     ),
+    //   )
+    //   .map((t) => {
+    //     let newt = t
+    //     if (Config.supplementNamespace)
+    //       newt = newt.replace(`${Config.supplementNamespace}`, '')
+    //     return {
+    //       command: Commands.replace_with,
+    //       title: i18n.t('refactor.replace_with', newt),
+    //       arguments: [newt],
+    //     }
+    //   })
+    //   .forEach(c => actions.push(c))
 
     // Config.supplementNamespace
     return actions
