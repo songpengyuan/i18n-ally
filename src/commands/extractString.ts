@@ -88,7 +88,7 @@ async function ExtractOrInsertCommnad(
   const isReplaceLoading = Config.ctx.globalState.get('isReplaceLoading')
   Log.info(`isReplaceLoading: ${isReplaceLoading} --${typeof isReplaceLoading}`)
   if (isReplaceLoading) {
-    const msgButton = '取消'
+    const msgButton = '手动取消'
     const result = await window.showErrorMessage(
       '翻译当前文件处理中，请稍后再试',
       msgButton,
