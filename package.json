@@ -674,10 +674,6 @@
       ],
       "explorer/context": [
         {
-          "command": "okki-i18n.extract-hard-strings-batch",
-          "group": "1_i18nally@1"
-        },
-        {
           "command": "okki-i18n.detect_hard_strings_batch",
           "group": "1_i18nally@1"
         }

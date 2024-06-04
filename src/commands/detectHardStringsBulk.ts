@@ -53,7 +53,7 @@ async function findChineseTextInFolder(folderPath: string) {
     const filePath = path.join(folderPath, file)
     if (fs.statSync(filePath).isFile()) {
       const extname = path.extname(file)
-      if (['.vue', '.ts', '.js'].includes(extname))
+      if (['.vue', '.ts', '.js', '.tsx', '.jsx'].includes(extname))
         await findChineseTextInFile(filePath)
     }
     else {
